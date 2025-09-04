@@ -46,11 +46,11 @@ with col1:
     data_size = len(sample_data)
     st.write(f"データサイズ: {data_size} バイト")
     
-    if st.button("データ処理をシミュレート", key="simulate_data"):
-        st.session_state.simulate_data = True
+    if st.button("データ処理をシミュレート", key="simulate_data_btn"):
+        st.session_state.simulate_data_state = True
 
 with col2:
-    if st.session_state.get('simulate_data', False):
+    if st.session_state.get('simulate_data_state', False):
         st.markdown("### 処理過程の可視化")
         
         # データを分割
@@ -122,13 +122,13 @@ with col1:
         key="task_count"
     )
     
-    if st.button("処理速度をシミュレート", key="simulate_speed"):
-        st.session_state.simulate_speed = True
+    if st.button("処理速度をシミュレート", key="simulate_speed_btn"):
+        st.session_state.simulate_speed_state = True
         st.session_state.frequency_value = frequency_ghz
         st.session_state.task_count_value = task_count
 
 with col2:
-    if st.session_state.get('simulate_speed', False):
+    if st.session_state.get('simulate_speed_state', False):
         st.markdown("### 処理速度シミュレーション")
         
         freq = st.session_state.frequency_value
@@ -488,7 +488,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Initialize session state
-if 'simulate_data' not in st.session_state:
-    st.session_state.simulate_data = False
-if 'simulate_speed' not in st.session_state:
-    st.session_state.simulate_speed = False
+if 'simulate_data_state' not in st.session_state:
+    st.session_state.simulate_data_state = False
+if 'simulate_speed_state' not in st.session_state:
+    st.session_state.simulate_speed_state = False
