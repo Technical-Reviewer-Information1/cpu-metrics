@@ -8,13 +8,13 @@ from plotly.subplots import make_subplots
 
 # Page configuration
 st.set_page_config(
-    page_title="CPU性能指標可視化学習アプリ",
+    page_title="CPUの性能指標",
     page_icon="💻",
     layout="wide"
 )
 
 # Title and credits
-st.title("💻 CPU性能指標可視化学習アプリ")
+st.title("CPUの性能指標（pp.181-182）")
 st.caption("Created by Dit-Lab.(Daiki ITO)")
 st.caption("Supported by Tomoaki ATSUMI")
 
