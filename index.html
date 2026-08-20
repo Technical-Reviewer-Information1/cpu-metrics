@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPUの性能指標｜情報Ⅰ共通テスト対策問題集</title>
+<meta name="description" content="クロック信号の波形を見ながら、1秒間に何命令実行できるかを計算します。ビット数と扱えるメモリ空間の関係も確かめられます。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 fill=%22%2315181c%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-size=%2218%22 font-family=%22monospace%22 fill=%22%23fff%22 text-anchor=%22middle%22%3E01%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="inner">
+    <span class="eyebrow">第 6 章　コンピュータ　6-3</span>
+    <h1>CPUの性能指標（pp.181）</h1>
+    <p class="lead">クロック信号の波形を見ながら、1秒間に何命令実行できるかを計算します。ビット数と扱えるメモリ空間の関係も確かめられます。</p>
+    <p class="credit">Created by Dit-Lab.(Daiki ITO)　/　Supported by Tomoaki ATSUMI</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="step" id="step1">
+    <h2><span class="no">STEP 1</span>CPUのビット数と扱えるメモリ空間</h2>
+    <p class="desc">CPUのビット数は、一度に扱えるデータの大きさと、指定できるアドレスの数を決めます。</p>
+    <div class="panel">
+      <label class="fld" for="bits">CPUのビット数：<span class="mono" id="bitsV">32</span> ビット</label>
+      <input type="range" id="bits" min="8" max="64" step="4" value="32">
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn" data-b="32">32ビット</button>
+        <button class="btn" data-b="64">64ビット</button>
+      </div>
+      <div class="bitcmp" style="margin-top:14px">
+        <div class="c"><h4>指定できるアドレスの数</h4><div class="v" id="addrN">—</div><div class="s">2 の ビット数 乗</div></div>
+        <div class="c"><h4>理論上のメモリ空間</h4><div class="v" id="memSize">—</div><div class="s">1アドレス1バイトとして</div></div>
+      </div>
+      <div class="note" id="bitNote" style="margin-top:12px"></div>
+      <div class="tbl-scroll" style="margin-top:12px"><table class="tbl" id="bitTable"></table></div>
+    </div>
+  </section>
+
+  <section class="step" id="step2">
+    <h2><span class="no">STEP 2</span>a〜c の記述を判定する（問1）</h2>
+    <div class="panel">
+      <div class="abcde" id="jBox"></div>
+      <div class="note" id="jNote" style="margin-top:12px"></div>
+      <hr class="sep">
+      <p class="qhead">適切なものをすべて挙げたものはどれか。</p>
+      <div id="q1Choices" class="choice4"></div>
+      <div class="note" id="q1Fb" hidden style="margin-top:10px"></div>
+    </div>
+  </section>
+
+  <section class="step" id="step3">
+    <h2><span class="no">STEP 3</span>クロック信号と実行できる命令数</h2>
+    <p class="desc">CPUは一定の間隔でオンとオフを繰り返す<strong>クロック信号</strong>に合わせて動きます。1秒あたりの回数が<strong>クロック周波数</strong>です。</p>
+    <div class="panel">
+      <div class="btn-row" style="flex-wrap:wrap">
+        <button class="btn" id="preBook">本文の条件（3.0GHz・6周期）</button>
+      </div>
+      <div class="grid c2" style="margin-top:12px">
+        <div>
+          <label class="fld" for="ghz">クロック周波数：<span class="mono" id="ghzV">3.0</span> GHz</label>
+          <input type="range" id="ghz" min="1" max="50" step="1" value="30">
+          <label class="fld" for="cyc" style="margin-top:12px">1つの命令に必要な周期数：<span class="mono" id="cycV">6</span> 周期</label>
+          <input type="range" id="cyc" min="1" max="12" step="1" value="6">
+          <label class="fld" for="ninst" style="margin-top:12px">実行する命令の数：<span class="mono" id="ninstV">2</span> 個</label>
+          <input type="range" id="ninst" min="1" max="10" step="1" value="2">
+        </div>
+        <div>
+          <div class="metrics">
+            <div class="metric"><div class="k">1秒間に実行できる命令数</div><div class="v" id="mIPS" style="font-size:1.25rem">—</div></div>
+            <div class="metric"><div class="k">1命令にかかる時間</div><div class="v" id="mT1" style="font-size:1.25rem">—</div></div>
+            <div class="metric"><div class="k">この命令数にかかる時間</div><div class="v" id="mTn" style="font-size:1.25rem">—</div></div>
+          </div>
+          <div class="eqbox" id="cEq" style="margin-top:12px">—</div>
+        </div>
+      </div>
+      <div id="clockBox" style="margin-top:12px"></div>
+      <div class="note" id="clockNote" style="margin-top:10px"></div>
+    </div>
+  </section>
+
+  <section class="step" id="step4">
+    <h2><span class="no">STEP 4</span>本文の空欄【イ】・【ウ】を確かめる（問2）</h2>
+    <div class="panel" id="blankBox"></div>
+    <div class="note" id="blankNote" style="margin-top:10px"></div>
+  </section>
+
+  <section class="step" id="step5">
+    <h2><span class="no">STEP 5</span>性能はクロック周波数だけでは決まらない</h2>
+    <div class="panel">
+      <div class="tbl-scroll"><table class="tbl" id="factTable"></table></div>
+      <div class="note info" style="margin-top:12px">
+        同じクロック周波数でも、1命令に必要な周期数が少ないCPUのほうが速く処理できます。
+        カタログの数字を比べるときは、<strong>クロック周波数・コア数・1命令あたりの周期数</strong>をあわせて見る必要があります。
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="glossary">
+    <h2><span class="no">用語</span>この節で出てくることば</h2>
+    <div class="panel"><div id="glossBox"></div></div>
+  </section>
+
+  <section class="step" id="wrap">
+    <h2><span class="no">まとめ</span>おさえておきたいこと</h2>
+    <div class="panel">
+      <ul class="bullets">
+        <li><strong>クロック周波数</strong>＝1秒あたりにオンとオフを繰り返す回数。単位はHz。1GHz＝10<sup>9</sup>Hz。</li>
+        <li>1秒間に実行できる命令数 ＝ <strong>クロック周波数 ÷ 1命令に必要な周期数</strong>。</li>
+        <li>n個の命令にかかる時間 ＝ <strong>周期数 × n ÷ クロック周波数</strong>。</li>
+        <li>ビット数が大きいCPUほど、理論上扱えるメモリ空間が大きい（32ビットで約4GB、64ビットは桁違い）。</li>
+        <li>64ビットCPUでも32ビット用のOSは動く。また<strong>USBメモリの速度はCPUのビット数では変わらない</strong>。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="step">
+    <h2><span class="no">活用</span>授業・探究での使い方</h2>
+    <div class="use-note">
+      <h3>授業で</h3>
+      <ul>
+        <li>STEP 3 で周期数を変えながら、クロック周波数が同じでも実行できる命令数が変わることを見せる。</li>
+        <li>STEP 1 で32ビットと64ビットの理論上のメモリ空間を比べ、桁の違いを実感させる。</li>
+        <li>STEP 5 でクロック周波数だけでCPUの速さは決まらないことを話し合う。</li>
+      </ul>
+      <h3 style="margin-top:12px">探究で</h3>
+      <ul>
+        <li>自分のパソコンやスマートフォンのCPUのクロック周波数とコア数を調べ、性能を比べる。</li>
+        <li>クロック周波数が近年あまり上がらなくなった理由（発熱・消費電力）を調べる。</li>
+        <li>マルチコアCPUで速くなる処理と、速くならない処理の違いを考える。</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  情報Ⅰ 共通テスト対策問題集（技術評論社）連動Webアプリ　/　Created by Dit-Lab.(Daiki ITO)　/　Supported by Tomoaki ATSUMI
+</footer>
+
+<script src="js/tools.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/terms.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
