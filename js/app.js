@@ -191,5 +191,22 @@
     drawBits(); drawJudge(); drawQ1(); drawClock(); drawBlanks(); drawFact();
     window.Terms.attach();
   }
+  if (window.Predict) Predict.make('pdK', {
+    q: 'クロック周波数が <strong>3.0GHz から 6.0GHz</strong> のCPUに買い替えました。同じプログラムの実行時間は半分になるでしょうか？',
+    type: 'pick',
+    ch: ['どんなCPUでも必ず半分になる',
+         '1命令に必要な周期数が同じなら半分になる',
+         'クロック周波数は実行時間と関係ない',
+         '必ず半分より短くなる'],
+    answer: function () { return 1; },
+    show: function () {
+      return '実行時間 ＝ <span class="mono">命令数 × 1命令あたりの周期数 ÷ クロック周波数</span>。' +
+             '周期数が同じなら、分母が2倍になるので時間は半分です。';
+    },
+    why: 'ただし<strong>ちがうCPUでは1命令あたりの周期数もちがう</strong>のがふつうです。' +
+         '周期数が6から12に増えてしまえば、クロックが2倍でも実行時間は変わりません。' +
+         'だからGHzだけでは速さを比べられません。STEP 3 で周期数のつまみを動かして確かめてみましょう。'
+  });
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
